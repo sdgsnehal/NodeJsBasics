@@ -3,9 +3,10 @@ const MongoClient = mongodb.MongoClient;
 
 
 const mongoConnect = (callback) => {
-  MongoClient.connect('mongodb+srv://sdgsnehal:spiceqt60@cluster0.zutjjrv.mongodb.net/?retryWrites=true&w=majority')
+  MongoClient.connect('mongodb+srv://sdgsnehal:spiceqt60@cluster0.zutjjrv.mongodb.net/shop?retryWrites=true&w=majority')
     .then(client =>{
       console.log("Connected")
+      _db = client.db()
       callback(client)
     })
     .catch(err =>{
@@ -13,5 +14,12 @@ const mongoConnect = (callback) => {
     
     });
 };
-module.exports = mongoConnect;
+const getDb =() =>{
+  if(_db){
+    return _db
+  } 
+  throw 'No database found'
+}
+exports.mongoConnect = mongoConnect;
+exports.getDb = getDb;
 
